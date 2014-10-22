@@ -178,25 +178,39 @@ var onSuccessGPS  = function(position) {
     function onErrorGPS() {
                         hayGPS=false;
                         document.getElementById('gps').className = 'estado no';
-                        retornaEmas(function(datosEMA){
-                            var cantidad=datosEMA.length;
-                            texto="";
-                            var i;
-                            for (i=0;i<cantidad;i++) {
-                                ema.push([datosEMA[i].nombreEma,datosEMA[i].latitudEma,datosEMA[i].longitudEma,datosEMA[i].codigoEma,0]);
-                             }
+                        
+                        $jsonp.send(' http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/listaEmas?callback=handleStuff', {
+                            callbackName: 'handleStuff',
+                            onSuccess: function(json){
+                                    var datosEMA=json;
+                                    var cantidad=datosEMA.length;
+                                    texto="";
+                                    var i;
+                                    for (i=0;i<cantidad;i++) {
+                                        ema.push([datosEMA[i].nombreEma,datosEMA[i].latitudEma,datosEMA[i].longitudEma,datosEMA[i].codigoEma,0]);
+                                     }
 
-                            for (var i = 0; i < cantidad; i++) { 
-                               //var j=i;
-                              $("<option value='"+i+"'>"+ema[i][0]).appendTo("#select-choice-a");
-                              var myselect = $("#select-choice-a");
-                              myselect.selectmenu('refresh');
+                                    for (var i = 0; i < cantidad; i++) { 
+                                       //var j=i;
+                                      $("<option value='"+i+"'>"+ema[i][0]).appendTo("#select-choice-a");
+                                      var myselect = $("#select-choice-a");
+                                      myselect.selectmenu('refresh');
 
-                            }
-                            $("#select-choice-a option[value=0]").attr("selected",true);
-                            var myselect = $("#select-choice-a");
-                            myselect.selectmenu('refresh');
-    
-                     });
+                                    }
+                                    $("#select-choice-a option[value=0]").attr("selected",true);
+                                    var myselect = $("#select-choice-a");
+                                    myselect.selectmenu('refresh');
+                                    },
+                                    onTimeout: function(){
+                                        //console.log('timeout!');
+                                            var option = document.createElement("option");
+                                            option.text ="Hay problemas";
+                                            option.value = 0;
+                                            var select = document.getElementById("select-choice-a");
+                                            select.appendChild(option);
+                                    },
+                                    timeout: 5
+                                });
+                        
     }
     
