@@ -130,14 +130,11 @@ function distance(lat1,lon1,lat2,lon2) {
 }
 var menorDistancia= new Array(7);
 
-var onSuccessGPS = function(position) {
+var onSuccessGPS  = function(position) {
                    hayGPS=true;
                    document.getElementById('gps').className = 'estado ok';
                    //solicita el listado de EMAs al WebServer por JSONP
-                   
-function retornaEmas() {
-            //	refreshGadget();
-            	$jsonp.send(' http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/listaEmas?callback=handleStuff', {
+            	   $jsonp.send(' http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/listaEmas?callback=handleStuff', {
                             callbackName: 'handleStuff',
                             onSuccess: function(json){
                                     var datosEMA=json;
@@ -175,33 +172,7 @@ function retornaEmas() {
                             },
                             timeout: 5
                         });
-            }
-                   retornaEmas(function(datosEMA){
-                        var cantidad=datosEMA.length;
-                        texto="";
-                        var i;
-                        for (i=0;i<cantidad;i++) {
-                            ema.push([datosEMA[i].nombreEma,datosEMA[i].latitudEma,datosEMA[i].longitudEma,datosEMA[i].altitudEma,datosEMA[i].codigoEma,
-                                distance(datosEMA[i].latitudEma,datosEMA[i].longitudEma,position.coords.latitude,position.coords.longitude)]);
-                            
-                         }
-                        // ordena por menor distancia
-                        ema.sort(function(a,b) {
-                                        return a[5]- b[5];
-                            });
-                        //asigna
-                        for (var i = 0; i < cantidad; i++) { 
-                           //var j=i;
-                          $("<option value='"+i+"'>"+ema[i][0]+" (Dist:"+Math.round(ema[i][5]) +" km) </option>").appendTo("#select-choice-a");
-                          var myselect = $("#select-choice-a");
-                          myselect.selectmenu('refresh');
-                        }
-                        
-                        $("#select-choice-a option[value=0]").attr("selected",true);
-                        var myselect = $("#select-choice-a");
-                        myselect.selectmenu('refresh');
-    
-                    });
+           
     }
 
     function onErrorGPS() {
