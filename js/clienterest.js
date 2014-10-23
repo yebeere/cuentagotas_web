@@ -33,32 +33,7 @@
 
             /* función que envía la solicitud de parametros al servidor*/
             
-            function retornaEmas() {
-            //	refreshGadget();
-            	$jsonp.send(' http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/listaEmas?callback=handleStuff', {
-                            callbackName: 'handleStuff',
-                            onSuccess: function(json){
-                                    var datosEMA=json;
-                                    cantidad=datosEMA.length;
-                                    texto="";
-                                    var i;
-                                    var select = document.getElementById("comboemas");
-                                    for (i=0;i<cantidad;i++) {
-                                                select.options.add(new Option(datosEMA[i].nombreEma,datosEMA[i].codigoEma));
-                                                //select.appendChild(option);
-		                     }
-                            },
-                            onTimeout: function(){
-                                //console.log('timeout!');
-                                    var option = document.createElement("option");
-                                    option.text ="Hay problemas";
-                                    option.value = 0;
-                                    var select = document.getElementById("comboemas");
-                                    select.appendChild(option);
-                            },
-                            timeout: 5
-                        });
-            }
+
             
             function retornaDatosEma() {
                 var ema=document.getElementById('comboemas').options[document.getElementById('comboemas').selectedIndex].value; 
