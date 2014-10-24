@@ -35,7 +35,7 @@
             
 
             
-            function retornaDatosEma() {
+      /*      function retornaDatosEma() {
                 var ema=document.getElementById('comboemas').options[document.getElementById('comboemas').selectedIndex].value; 
                 var URL = 'http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/datosActuales/ema/'+ema+'?callback=handleStuff';
                 xmlHttp.open("GET", URL, false); //true mean call is asynchronous
@@ -80,3 +80,4 @@
                setTimeout(retornaDatosEma,2*60*1000);
                //window.setInterval(retornaDatosEma, 2*60*1000);
             }
+*/

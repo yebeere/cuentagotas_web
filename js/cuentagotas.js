@@ -33,10 +33,12 @@
                 var e = document.getElementById("select-choice-a");
                 var emaSeleccionada = e.options[e.selectedIndex].value;
                 var valores =new Array();
-                 retornaDatosEma(ema[emaSeleccionada][4],function(datosEMA){
-                            console.log("emaFS="+emaFS +" hayRed="+hayRed)  ;
-                             valores=datosEMA; 
-                            });
+                
+                
+//                 retornaDatosEma(ema[emaSeleccionada][4],function(datosEMA){
+//                            console.log("emaFS="+emaFS +" hayRed="+hayRed)  ;
+//                             valores=datosEMA; 
+//                            });
                             
                 var tipoCultivo=getRadioValue('frutal');
                 var tipoRiego=getRadioValue('tipoRiego');
@@ -53,6 +55,52 @@
                 document.getElementById('tipoRiego').innerHTML = triego[tipoRiego];
                 // adquiere los datos de la EMA seleccionada
                 // 
+                
+                 $jsonp.send('http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/datosActuales/ema/'+ema[emaSeleccionada][4]+'?callback=handleStuff', {
+                //$jsonp.send('http://localhost/yii/ws_clima_inta/index.php/api/datosActuales/ema/'+ema+'?callback=handleStuff', {
+                        callbackName: 'handleStuff',
+                        onSuccess: function(json){
+                                    console.log('success!', json);
+                                    if (json.error!="Hay problemas con la EMA"){
+                                            var datosEMA=json;
+                                            // comparo fechas
+                                             if (comparaFecha(datosEMA.fecha,datosEMA.hora)){
+                                                    // la EMA esta dentro de las 4 hs
+                                                    emaFS=false;
+                                                } else {
+                                                    alert("La Estación Meteorológica Automática esta Fuera de Servicio");
+                                                    emaFS=true;
+                                                    document.getElementById('estacionAuto').innerHTML = "Se utilizan valores estandar";
+                                                    //si no hay red calcular los datos de EPAN con las tablas
+                                                     alert("Se utilizan valores estándar - Cambie de Estación Meteorológica") ;
+                                                    var fechaActual = new Date();
+                                                    var mes=fechaActual.getMonth();
+                                                    mediaEva=epan[mes]*0.7;// 0.7 coeficiente del tanque Kp
+                                                     console.log('mediaEva=', mediaEva);
+                                                }
+
+
+
+                                    } else {
+                                            error="Problemas con la EMA";
+
+                                          }
+                                    },
+                        onTimeout: function(){
+                               document.getElementById('estacionAuto').innerHTML = "Se utilizan valores estandar";
+                               //si no hay red calcular los datos de EPAN con las tablas
+                                alert("Se utilizan valores estándar - Cambie de Estación Meteorológica") ;
+                               var fechaActual = new Date();
+                               var mes=fechaActual.getMonth();
+                               mediaEva=epan[mes]*0.7;// 0.7 coeficiente del tanque Kp
+                        },
+                    timeout: 15
+                });
+                
+                
+                
+                
+                
                 
                 if (hayRed && !emaFS){ // si hay red busca losdatos en los archivos de las EMA
                              document.getElementById('estacionAuto').innerHTML = ema[emaSeleccionada][0];

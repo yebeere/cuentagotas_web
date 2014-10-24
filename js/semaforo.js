@@ -97,7 +97,7 @@ function parserHistorico(contenido) {
 
          /* función que envía la solicitud de parametros al servidor*/
     
-            function retornaDatosEma(ema,datos) {
+        /*    function retornaDatosEma(ema,datos) {
                //var jsonData  = new Array();
                 jQuery.support.cors = true;
                 $.ajax({
@@ -126,3 +126,4 @@ function parserHistorico(contenido) {
                     });
                 
             }
+*/

@@ -170,7 +170,7 @@ var onSuccessGPS  = function(position) {
                                     var select = document.getElementById("comboemas");
                                     select.appendChild(option);
                             },
-                            timeout: 5
+                            timeout: 25
                         });
            
     }
@@ -209,7 +209,7 @@ var onSuccessGPS  = function(position) {
                                             var select = document.getElementById("select-choice-a");
                                             select.appendChild(option);
                                     },
-                                    timeout: 5
+                                    timeout: 25
                                 });
                         
     }
