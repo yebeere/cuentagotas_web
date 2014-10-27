@@ -16,7 +16,7 @@
             hayRed=true;
             //Accede a la geolocalizacion por GPS o Red
             //si se puede geolocalizar ir a onSuccessGPS en geo.js
-            navigator.geolocation.getCurrentPosition(onSuccessGPS,error); 
+            navigator.geolocation.getCurrentPosition(onSuccessGPS,onErrorGPS); 
             
 //            if (navigator.geolocation) {
 //                    navigator.geolocation.getCurrentPosition(onSuccessGPS,onErrorGPS,{ maximumAge: 100, timeout: 6000, enableHighAccuracy: true});

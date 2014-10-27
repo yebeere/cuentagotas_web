@@ -222,21 +222,9 @@ var onSuccessGPS  = function(position) {
                         
     }
     
-function localizar()
-      {
-        navigator.geolocation.getCurrentPosition(ubicacion,error);
-      }
+
  
-     function ubicacion(posicion)
-      {
-        var contenedor = document.getElementById("mapa");
  
-        var latitud = position.coords.latitude;
-        var longitud = position.coords.longitude;
-        var precision = position.coords.accuracy;
- 
-          alert("Lat="+latitud+" - Long="+longitud+" - Precision="+precision);
-       }
  
       function error(error)
        {
