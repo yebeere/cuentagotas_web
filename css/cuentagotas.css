@@ -10,6 +10,8 @@ root {
     display: block;
 }
 
+
+
 .weather-info-value   {
 	color: #080CC7;
 	font-style: normal;
@@ -122,7 +124,7 @@ root {
 }
 .weather-content .emas h2 {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
-	color: #55F2EF;
+	color: #EEF255;
 	font-weight: 500;
 	vertical-align: middle;
 }
@@ -133,8 +135,7 @@ root {
 	background-color: #000000;
 	
 }
-
-#riego .fluid.tabla table {
+.fluid.tabla table {
 	margin: 0 auto;
 }
 tbody tr .impar {
@@ -143,6 +144,8 @@ tbody tr .impar {
 	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	border-top-style: none;
 	font-size: small;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 tbody tr .par {
 	height: 20px;
@@ -151,6 +154,7 @@ tbody tr .par {
 	text-align: right;
 	font-weight: bold;
 	color: #0A0FF4;
+	background-color: #CDEAF9;
 }
 tbody tr #nr {
 	color: #FFFFFF;

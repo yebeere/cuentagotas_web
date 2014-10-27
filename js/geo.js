@@ -133,6 +133,9 @@ var menorDistancia= new Array(7);
 var onSuccessGPS  = function(position) {
                    hayGPS=true;
                    document.getElementById('gps').className = 'estado ok';
+                    var latitud = position.coords.latitude;
+                    var longitud = position.coords.longitude;
+                    var precision = position.coords.accuracy;
                    //solicita el listado de EMAs al WebServer por JSONP
             	   $jsonp.send(' http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/listaEmas?callback=handleStuff', {
                             callbackName: 'handleStuff',
@@ -143,7 +146,7 @@ var onSuccessGPS  = function(position) {
                                     var i;
                                     for (i=0;i<cantidad;i++) {
                                         ema.push([datosEMA[i].nombreEma,datosEMA[i].latitudEma,datosEMA[i].longitudEma,datosEMA[i].altitudEma,datosEMA[i].codigoEma,
-                                            distance(datosEMA[i].latitudEma,datosEMA[i].longitudEma,position.coords.latitude,position.coords.longitude)]);
+                                            distance(datosEMA[i].latitudEma,datosEMA[i].longitudEma,latitud,longitud)]);
 
                                      }
                                     // ordena por menor distancia
@@ -170,7 +173,7 @@ var onSuccessGPS  = function(position) {
                                     var select = document.getElementById("comboemas");
                                     select.appendChild(option);
                             },
-                            timeout: 25
+                            timeout: 1000
                         });
            
     }
@@ -182,17 +185,22 @@ var onSuccessGPS  = function(position) {
                         $jsonp.send(' http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/listaEmas?callback=handleStuff', {
                             callbackName: 'handleStuff',
                             onSuccess: function(json){
+                                   
                                     var datosEMA=json;
                                     var cantidad=datosEMA.length;
                                     texto="";
                                     var i;
                                     for (i=0;i<cantidad;i++) {
-                                        ema.push([datosEMA[i].nombreEma,datosEMA[i].latitudEma,datosEMA[i].longitudEma,datosEMA[i].codigoEma,0]);
+                                        ema.push([datosEMA[i].nombreEma,datosEMA[i].latitudEma,datosEMA[i].longitudEma,datosEMA[i].altitudEma,datosEMA[i].codigoEma,
+                                            0]);
+
                                      }
 
                                     for (var i = 0; i < cantidad; i++) { 
                                        //var j=i;
-                                      $("<option value='"+i+"'>"+ema[i][0]).appendTo("#select-choice-a");
+                                       texto=  "<option value='"+i+"'>"+ema[i][0]+"</option>";
+                                        //<option value="1"></option>
+                                      $(texto).appendTo("#select-choice-a");
                                       var myselect = $("#select-choice-a");
                                       myselect.selectmenu('refresh');
 
@@ -209,8 +217,39 @@ var onSuccessGPS  = function(position) {
                                             var select = document.getElementById("select-choice-a");
                                             select.appendChild(option);
                                     },
-                                    timeout: 25
+                                    timeout: 1000
                                 });
                         
     }
     
+function localizar()
+      {
+        navigator.geolocation.getCurrentPosition(ubicacion,error);
+      }
+ 
+     function ubicacion(posicion)
+      {
+        var contenedor = document.getElementById("mapa");
+ 
+        var latitud = position.coords.latitude;
+        var longitud = position.coords.longitude;
+        var precision = position.coords.accuracy;
+ 
+          alert("Lat="+latitud+" - Long="+longitud+" - Precision="+precision);
+       }
+ 
+      function error(error)
+       {
+         onErrorGPS(); 
+//         if(error.code == 0)
+//            alert("Error Desconocido");
+//         else if(error.code == 1){
+//             alert("No fue posible contactarte");
+//             onErrorGPS();}
+//         else if(error.code == 2)
+//            alert("No hay una ubicacion disponible");
+//         else if(error.code == 3)
+//            alert("Tiempo agotado");
+//        else 
+//            alert("Error Desconocido");
+        }

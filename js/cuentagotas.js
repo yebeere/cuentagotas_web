@@ -16,12 +16,14 @@
             hayRed=true;
             //Accede a la geolocalizacion por GPS o Red
             //si se puede geolocalizar ir a onSuccessGPS en geo.js
-            if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(onSuccessGPS,onErrorGPS,{ maximumAge: 100, timeout: 6000, enableHighAccuracy: true});
-                } else {
-                    alert('No se puede geolocalizar');
-                    onErrorGPS();
-                }
+            navigator.geolocation.getCurrentPosition(onSuccessGPS,error); 
+            
+//            if (navigator.geolocation) {
+//                    navigator.geolocation.getCurrentPosition(onSuccessGPS,onErrorGPS,{ maximumAge: 100, timeout: 6000, enableHighAccuracy: true});
+//                } else {
+//                    alert('No se puede geolocalizar');
+//                    onErrorGPS();
+//                }
         }
         
     function resultado(){
@@ -32,8 +34,6 @@
                // obtiene los datos seleccionados
                 var e = document.getElementById("select-choice-a");
                 var emaSeleccionada = e.options[e.selectedIndex].value;
-                var valores =new Array();
-                
                 
 //                 retornaDatosEma(ema[emaSeleccionada][4],function(datosEMA){
 //                            console.log("emaFS="+emaFS +" hayRed="+hayRed)  ;
@@ -48,7 +48,7 @@
                 
                 //imprime los valores elegidos
                 
-                //document.getElementById('estacionAuto').innerHTML = ema[emaSeleccionada][0];
+                document.getElementById('estacionAuto').innerHTML = ema[emaSeleccionada][0];
                 document.getElementById('tipoFrutal').innerHTML = culti[tipoCultivo];
                 document.getElementById('estadoCultivo').innerHTML =  epoc[epoca];
                 document.getElementById('porcentajeCob').innerHTML =kr[PC] ; 
@@ -59,6 +59,7 @@
                  $jsonp.send('http://meta.fi.uncoma.edu.ar/cuentagotas/ws_clima_inta/index.php/api/datosActuales/ema/'+ema[emaSeleccionada][4]+'?callback=handleStuff', {
                 //$jsonp.send('http://localhost/yii/ws_clima_inta/index.php/api/datosActuales/ema/'+ema+'?callback=handleStuff', {
                         callbackName: 'handleStuff',
+                        async:false,
                         onSuccess: function(json){
                                     console.log('success!', json);
                                     if (json.error!="Hay problemas con la EMA"){
@@ -83,7 +84,7 @@
 
                                     } else {
                                             error="Problemas con la EMA";
-
+                                            alert(error);
                                           }
                                     },
                         onTimeout: function(){
@@ -94,28 +95,28 @@
                                var mes=fechaActual.getMonth();
                                mediaEva=epan[mes]*0.7;// 0.7 coeficiente del tanque Kp
                         },
-                    timeout: 15
+                    timeout: 1000
                 });
                 
                 
                 
                 
                 
-                
-                if (hayRed && !emaFS){ // si hay red busca losdatos en los archivos de las EMA
-                             document.getElementById('estacionAuto').innerHTML = ema[emaSeleccionada][0];
-                             console.log("es="+valores.estacion);
-                            // buscardatosHistoricos(ema[emaSeleccionada][4]);     //obtiene los ultimos datos y mediaEva
-                             ;
-                    } else{
-                               console.log("fs="+valores.estacion);
-                               document.getElementById('estacionAuto').innerHTML = "Se utilizan valores estandar";
-                               //si no hay red calcular los datos de EPAN con las tablas
-                                alert("Se utilizan valores estándar - Cambie de Estación Meteorológica") ;
-                               var fechaActual = new Date();
-                               var mes=fechaActual.getMonth();
-                               mediaEva=epan[mes]*0.7;// 0.7 coeficiente del tanque Kp
-                      }
+//                
+//                if (hayRed && !emaFS){ // si hay red busca losdatos en los archivos de las EMA
+//                             document.getElementById('estacionAuto').innerHTML = ema[emaSeleccionada][0];
+//                             console.log("es="+valores.estacion);
+//                            // buscardatosHistoricos(ema[emaSeleccionada][4]);     //obtiene los ultimos datos y mediaEva
+//                             ;
+//                    } else{
+//                               console.log("fs="+valores.estacion);
+//                               document.getElementById('estacionAuto').innerHTML = "Se utilizan valores estandar";
+//                               //si no hay red calcular los datos de EPAN con las tablas
+//                                alert("Se utilizan valores estándar - Cambie de Estación Meteorológica") ;
+//                               var fechaActual = new Date();
+//                               var mes=fechaActual.getMonth();
+//                               mediaEva=epan[mes]*0.7;// 0.7 coeficiente del tanque Kp
+//                      }
                 
                 
             }
@@ -123,7 +124,7 @@
                 var e = document.getElementById("select-choice-a");
                 var emaSeleccionada = e.options[e.selectedIndex].value;
                 if (emaSeleccionada==='Estaciones Meteorológicas') {emaSeleccionada=0;}
-                console.log(emaSeleccionada);
+                console.log(emaSeleccionada+'  #  '+ema[emaSeleccionada][4]);
               /*  
                 retornaDatosEma(ema[emaSeleccionada][4],function(datosEMA){
                         //console.log(datosEMA);
@@ -164,7 +165,7 @@
                             document.getElementById("lluvia").innerHTML='Sin Datos';
                             document.getElementById("viento").innerHTML='Sin Datos';
                         },
-                    timeout: 5
+                    timeout: 1000
                 });
                 
                 
