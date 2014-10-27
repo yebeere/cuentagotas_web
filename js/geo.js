@@ -226,18 +226,4 @@ var onSuccessGPS  = function(position) {
  
  
  
-      function error(error)
-       {
-         onErrorGPS(); 
-//         if(error.code == 0)
-//            alert("Error Desconocido");
-//         else if(error.code == 1){
-//             alert("No fue posible contactarte");
-//             onErrorGPS();}
-//         else if(error.code == 2)
-//            alert("No hay una ubicacion disponible");
-//         else if(error.code == 3)
-//            alert("Tiempo agotado");
-//        else 
-//            alert("Error Desconocido");
-        }
+
