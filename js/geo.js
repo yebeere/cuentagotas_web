@@ -79,8 +79,8 @@ var ema= new Array();
     kr['100']=1.00;
     
     var ef= new Array(2);
-    kr[0]=0.90;
-    kr[1]=0.80;
+    ef[0]=0.90;
+    ef[1]=0.80;
     
     var epan= new Array(12);
     epan[0]=10.1;

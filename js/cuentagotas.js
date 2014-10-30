@@ -68,6 +68,10 @@
                                              if (comparaFecha(datosEMA.fecha,datosEMA.hora)){
                                                     // la EMA esta dentro de las 4 hs
                                                     emaFS=false;
+                                                    mediaEva=datosEMA.evap;
+                                                    
+                                                    
+                                                    
                                                 } else {
                                                     alert("La Estación Meteorológica Automática esta Fuera de Servicio");
                                                     emaFS=true;
@@ -85,8 +89,20 @@
                                     } else {
                                             error="Problemas con la EMA";
                                             alert(error);
+                                            
                                           }
+                                          console.log("MediaEva="+mediaEva);
+                                          console.log("kc="+kc[tipoCultivo][epoca]);
+                                          console.log("kr="+kr[PC]);
+                                          console.log("ef="+ef[tipoRiego]);
+                                          console.log("tipoCultivo="+tipoCultivo);
+                                          console.log("epoca="+epoca);
+                                          console.log("tipoRiego="+tipoRiego);
+                                          
+                                     NR=mediaEva*kc[tipoCultivo][epoca]*kr[PC]/tipoRiego;     
+                                     document.getElementById('nr').innerHTML =NR.toFixed(2);      
                                     },
+                        onLoading:function(){console.log("Cargando emas");},
                         onTimeout: function(){
                                document.getElementById('estacionAuto').innerHTML = "Se utilizan valores estandar";
                                //si no hay red calcular los datos de EPAN con las tablas
@@ -155,6 +171,8 @@
                                 document.getElementById("viento").innerHTML='Sin Datos';
                               }
                         },
+                        onLoading:function(){console.log("Cargando datos emas");},
+                        
                         onTimeout: function(){
                             //console.log('timeout!');
                             document.getElementById("ema").innerHTML='Sin Datos';
